@@ -3,7 +3,7 @@ import cookies from 'browser-cookies';
 
 // Base axios instance with default configuration.
 let axiosInstance = axios.create({
-	baseURL: 'http://localhost',
+	baseURL: import.meta.env.VITE_API_ENDPOINT,
 	timeout: 1000,
 	headers: {
 		Accept: 'application/json'
