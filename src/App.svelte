@@ -14,9 +14,9 @@
   export let url = "";
 
   onMount(async () => {
-    if(Cookies.get('XSRF-TOKEN') == null){
-      navigate("/login", { replace: true });
-    }
+    // if(Cookies.get('XSRF-TOKEN') == null){
+    //   navigate("/login", { replace: true });
+    // }
   });
 
   
