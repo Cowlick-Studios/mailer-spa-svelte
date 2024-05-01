@@ -3,7 +3,7 @@
   import { Router, Link, Route, navigate } from "svelte-routing";
   import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Button } from 'flowbite-svelte';
   import { Footer, FooterBrand, FooterCopyright, FooterIcon, FooterLink, FooterLinkGroup } from 'flowbite-svelte';
-  import cookies from 'browser-cookies';
+  import Cookies from 'js-cookie';
 
   import HomePage from './pages/HomePage.svelte';
   import LoginPage from './pages/LoginPage.svelte';
@@ -14,7 +14,7 @@
   export let url = "";
 
   onMount(async () => {
-    if(cookies.get('XSRF-TOKEN') == null){
+    if(Cookies.get('XSRF-TOKEN') == null){
       navigate("/login", { replace: true });
     }
   });

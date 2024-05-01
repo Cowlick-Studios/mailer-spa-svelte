@@ -23,11 +23,12 @@
   },
   "dependencies": {
     "@iconify/svelte": "^4.0.1",
+    "@types/js-cookie": "^3.0.6",
     "axios": "^1.6.8",
-    "browser-cookies": "^1.2.0",
     "dayjs": "^1.11.11",
     "flowbite": "^2.3.0",
     "flowbite-svelte": "^0.46.1",
+    "js-cookie": "^3.0.5",
     "svelte-routing": "^2.12.0"
   }
 }

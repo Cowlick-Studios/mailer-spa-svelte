@@ -1,5 +1,5 @@
 import axios from 'axios';
-import cookies from 'browser-cookies';
+import Cookies from 'js-cookie';
 
 // Base axios instance with default configuration.
 let axiosInstance = axios.create({
@@ -15,7 +15,7 @@ let axiosInstance = axios.create({
 // Run function on request object every request.
 axiosInstance.interceptors.request.use((request) => {
 	// Preprocess request here ...
-  request.headers['X-XSRF-TOKEN'] = cookies.get('XSRF-TOKEN');
+  request.headers['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN');
 	return request;
 });
 
