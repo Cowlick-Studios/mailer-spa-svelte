@@ -15,7 +15,7 @@ let axiosInstance = axios.create({
 // Run function on request object every request.
 axiosInstance.interceptors.request.use((request) => {
 	// Preprocess request here ...
-	console.log(Cookies.get('XSRF-TOKEN'));
+	console.log(Cookies.get());
   request.headers['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN');
 	return request;
 });
