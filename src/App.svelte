@@ -1,20 +1,25 @@
 <script lang="ts">
+  import {onMount} from 'svelte';
   import { Router, Link, Route, navigate } from "svelte-routing";
   import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Button } from 'flowbite-svelte';
   import { Footer, FooterBrand, FooterCopyright, FooterIcon, FooterLink, FooterLinkGroup } from 'flowbite-svelte';
+  import cookies from 'browser-cookies';
 
   import HomePage from './pages/HomePage.svelte';
   import LoginPage from './pages/LoginPage.svelte';
+  import EditPage from './pages/EditPage.svelte';
 
   import { http } from './axios';
 
   export let url = "";
 
-  http.get('/sanctum/csrf-cookie').then((res) => {
-    console.log(res);
+  onMount(async () => {
+    if(cookies.get('XSRF-TOKEN') == null){
+      navigate("/login", { replace: true });
+    }
   });
 
-  navigate("/login", { replace: true });
+  
 </script>
 
 <div class="flex flex-col min-h-[100vh]">
@@ -36,6 +41,9 @@
   <main class="grow">
     <Router {url}>
       <div>
+        <Route path="/edit/:id" let:params> 
+          <EditPage id="{params.id}"/>
+        </Route>
         <Route path="/login" component={LoginPage} />
         <Route path="/" component={HomePage} />
       </div>

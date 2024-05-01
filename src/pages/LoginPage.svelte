@@ -1,4 +1,5 @@
 <script lang="ts">
+  import {onMount} from 'svelte';
   import { Router, Link, Route, navigate } from "svelte-routing";
   import { Card, Button, Label, Input, Checkbox } from 'flowbite-svelte';
 
@@ -21,6 +22,13 @@
       }
     });
   }
+
+  onMount(async () => {
+    http.get('/sanctum/csrf-cookie').then((res) => {
+      console.log(res);
+    });
+  });
+  
 </script>
 
 <Card class="mx-auto">
