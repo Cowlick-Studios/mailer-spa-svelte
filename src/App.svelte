@@ -31,6 +31,7 @@
       </NavBrand>
       <NavHamburger  />
       <NavUl >
+        <Button size="sm" on:click={() => {navigate('/login')}}>Login</Button>
         <Button size="sm">Logout</Button>
         <!-- <Link to="/">Home</Link>
         <Link to="/login">Login</Link> -->
