@@ -1,6 +1,5 @@
 <script lang="ts">
   import {onMount} from 'svelte';
-  import { Router, Link, Route, navigate } from "svelte-routing";
   import Icon from '@iconify/svelte';
   import { http } from '../axios';
   import { Label, Input, Button, Card } from 'flowbite-svelte';
@@ -80,9 +79,11 @@
 
   <div class="grid grid-cols-12 gap-2">
     <div class="col-span-6">
+      <Label for="first_name" class="mb-2">Form Name</Label>
       <Input type="text" id="first_name" placeholder="John" required bind:value={submissionName} />
     </div>
     <div class="col-span-6">
+      <Label for="first_name" class="mb-2">Form Origin</Label>
       <Input type="text" id="last_name" placeholder="Doe" required bind:value={submissionOrigin} />
     </div>
     <div class="col-span-12">
@@ -109,10 +110,10 @@
   
           <div class="flex flex-col gap-1">
             {#each submissionFields as field}
-            <div class="flex flex-row justify-between">
-              <div class="flex items-center">{field.name}</div>
-              <Button class="!p-2" on:click={() => {removeField(field)}}><Icon width="16px" icon="mdi:trash" /></Button>
-            </div>
+              <div class="flex flex-row justify-between">
+                <div class="flex items-center">{field.name}</div>
+                <Button class="!p-2" on:click={() => {removeField(field)}}><Icon width="16px" icon="mdi:trash" /></Button>
+              </div>
             {/each}
           </div>
         </div>
@@ -136,10 +137,10 @@
   
           <div class="flex flex-col gap-1">
             {#each submissionRecipiants as recipiant}
-            <div class="flex flex-row justify-between">
-              <div class="flex items-center">{recipiant.email}</div>
-              <Button class="!p-2" on:click={() => {removeRecipiant(recipiant)}}><Icon width="16px" icon="mdi:trash" /></Button>
-            </div>
+              <div class="flex flex-row justify-between">
+                <div class="flex items-center">{recipiant.email}</div>
+                <Button class="!p-2" on:click={() => {removeRecipiant(recipiant)}}><Icon width="16px" icon="mdi:trash" /></Button>
+              </div>
             {/each}
           </div>
         </div>

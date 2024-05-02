@@ -17,7 +17,6 @@
   const logout = () => {
     http.post('/logout').then((res) => {
       authenticated.set(false);
-      navigate('/login');
     });
   }
 
@@ -25,7 +24,7 @@
     if(Cookies.get('XSRF-TOKEN')){
       authenticated.set(true);
     } else {
-      navigate("/login", { replace: true });
+      authenticated.set(false);
     }
   });
 </script>

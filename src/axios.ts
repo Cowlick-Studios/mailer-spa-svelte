@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { authenticated } from './stores/AuthStore';
 
 // Base axios instance with default configuration.
 let axiosInstance = axios.create({
@@ -28,7 +29,11 @@ axiosInstance.interceptors.response.use(
 	},
 	(error) => {
 		// handle error level response here ...
-    // TODO: handle 401, 419 for unauthenticated token
+
+		if([401, 419].includes(error.response.status)){
+			authenticated.set(false);
+		}
+
 		return error;
 	}
 );
