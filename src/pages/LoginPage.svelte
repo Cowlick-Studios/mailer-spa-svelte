@@ -3,6 +3,7 @@
   import { Router, Link, Route, navigate } from "svelte-routing";
   import { Card, Button, Label, Input, Checkbox } from 'flowbite-svelte';
 
+  import { authenticated } from '../stores/AuthStore';
   import { http } from '../axios';
 
   let email: string = "";
@@ -18,6 +19,7 @@
       password = "";
 
       if(res.status == 200){
+        authenticated.set(true);
         navigate("/", { replace: true });
       }
     });

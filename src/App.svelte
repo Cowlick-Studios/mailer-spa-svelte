@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {onMount} from 'svelte';
+  import { onMount } from 'svelte';
   import { Router, Link, Route, navigate } from "svelte-routing";
   import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Button } from 'flowbite-svelte';
   import { Footer, FooterBrand, FooterCopyright, FooterIcon, FooterLink, FooterLinkGroup } from 'flowbite-svelte';
@@ -9,17 +9,25 @@
   import LoginPage from './pages/LoginPage.svelte';
   import EditPage from './pages/EditPage.svelte';
 
+  import { authenticated } from './stores/AuthStore';
   import { http } from './axios';
 
   export let url = "";
 
+  const logout = () => {
+    http.post('/logout').then((res) => {
+      authenticated.set(false);
+      navigate('/login');
+    });
+  }
+
   onMount(async () => {
-    if(!Cookies.get('XSRF-TOKEN')){
+    if(Cookies.get('XSRF-TOKEN')){
+      authenticated.set(true);
+    } else {
       navigate("/login", { replace: true });
     }
   });
-
-  
 </script>
 
 <div class="flex flex-col min-h-[100vh]">
@@ -31,10 +39,11 @@
       </NavBrand>
       <NavHamburger  />
       <NavUl >
-        <Button size="sm" on:click={() => {navigate('/login')}}>Login</Button>
-        <Button size="sm">Logout</Button>
-        <!-- <Link to="/">Home</Link>
-        <Link to="/login">Login</Link> -->
+        {#if !$authenticated}
+          <Button size="sm" on:click={() => {navigate('/login')}}>Login</Button>
+        {:else}
+          <Button size="sm" on:click={logout}>Logout</Button>
+        {/if}
       </NavUl>
     </Navbar>
   </header>
