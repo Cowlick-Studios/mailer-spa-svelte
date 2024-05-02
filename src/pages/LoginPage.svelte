@@ -24,9 +24,7 @@
   }
 
   onMount(async () => {
-    http.get('/sanctum/csrf-cookie').then((res) => {
-      console.log(res);
-    });
+    http.get('/sanctum/csrf-cookie').then((res) => {});
   });
   
 </script>

@@ -17,6 +17,8 @@
     // if(Cookies.get('XSRF-TOKEN') == null){
     //   navigate("/login", { replace: true });
     // }
+
+    console.log("Cookie", Cookies.get('XSRF-TOKEN'));
   });
 
   
