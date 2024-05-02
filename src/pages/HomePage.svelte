@@ -2,7 +2,7 @@
   import {onMount} from 'svelte';
   import { Router, Link, Route, navigate } from "svelte-routing";
   import { Label, Input, Button } from 'flowbite-svelte';
-  import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, TableSearch } from 'flowbite-svelte';
+  import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, TableSearch, InputAddon, ButtonGroup } from 'flowbite-svelte';
   import dayjs from 'dayjs';
   import { http } from '../axios';
 
@@ -57,7 +57,10 @@
         <Input type="text" id="first_name" placeholder="Submission Name" required bind:value={newSubmissionName} />
       </div>
       <div class="col-span-5">
-        <Input type="text" id="last_name" placeholder="Submission origin" required bind:value={newSubmissionOrigin} />
+        <ButtonGroup class="w-full">
+          <InputAddon>http://</InputAddon>
+          <Input type="text" id="last_name" placeholder="Submission origin" required bind:value={newSubmissionOrigin} />
+        </ButtonGroup>
       </div>
       <div class="col-span-2">
         <Button class="w-full" on:click={createNewSubmission}>Create</Button>

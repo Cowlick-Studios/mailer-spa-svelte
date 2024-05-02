@@ -2,7 +2,7 @@
   import {onMount} from 'svelte';
   import Icon from '@iconify/svelte';
   import { http } from '../axios';
-  import { Label, Input, Button, Card } from 'flowbite-svelte';
+  import { Label, Input, Button, Card, InputAddon, ButtonGroup } from 'flowbite-svelte';
 
   export let id;
 
@@ -80,11 +80,14 @@
   <div class="grid grid-cols-12 gap-2">
     <div class="col-span-6">
       <Label for="first_name" class="mb-2">Form Name</Label>
-      <Input type="text" id="first_name" placeholder="John" required bind:value={submissionName} />
+      <Input type="text" id="first_name" placeholder="Submission Names" required bind:value={submissionName} />
     </div>
     <div class="col-span-6">
       <Label for="first_name" class="mb-2">Form Origin</Label>
-      <Input type="text" id="last_name" placeholder="Doe" required bind:value={submissionOrigin} />
+      <ButtonGroup class="w-full">
+        <InputAddon>http://</InputAddon>
+        <Input type="text" id="last_name" placeholder="Submission Origin" required bind:value={submissionOrigin} />
+      </ButtonGroup>
     </div>
     <div class="col-span-12">
       <Button class="w-full" on:click={updateSubmission}>Updated</Button>
