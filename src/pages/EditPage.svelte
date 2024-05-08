@@ -1,8 +1,10 @@
 <script lang="ts">
   import {onMount} from 'svelte';
   import Icon from '@iconify/svelte';
+  import dayjs from 'dayjs';
   import { http } from '../axios';
   import { Label, Input, Button, Card, InputAddon, ButtonGroup } from 'flowbite-svelte';
+  import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
 
   export let id;
 
@@ -14,6 +16,8 @@
 
   let submissionRecipiants: any = [];
   let newRecipiantEmail: string = "";
+
+  let submissionLogs: any = [];
 
   const updateSubmission = () => {
     http.patch(`/api/email_submission/${id}`, {
@@ -62,6 +66,12 @@
     });
   }
 
+  const resendSubmissionLog = (submissionlog: any) => {
+    http.post(`/api/email_submission/${submissionlog.email_submission_id}/log/${submissionlog.id}/resend`).then((res) => {
+      console.log(res);
+    });
+  }
+
   onMount(async () => {
     http.get(`/api/email_submission/${id}`).then((res) => {
       const submissionRecord = res.data.email_submission;
@@ -71,6 +81,8 @@
 
       submissionFields = submissionRecord.fields;
       submissionRecipiants = submissionRecord.recipiants;
+
+      submissionLogs = submissionRecord.logs;
     });
   });
 </script>
@@ -149,7 +161,38 @@
         </div>
       </Card>
     </div>
+  </div>
 
+  <div class="grid grid-cols-12 gap-2">
+    <div class="col-span-12">
+      <Table shadow class="grid-cols-12">
+        <TableHead>
+          <TableHeadCell>ID</TableHeadCell>
+          {#each submissionFields as submissionField}
+            <TableHeadCell>{submissionField.name}</TableHeadCell>
+          {/each}
+          <TableHeadCell>Sent At</TableHeadCell>
+          <TableHeadCell>Actions</TableHeadCell>
+        </TableHead>
+        <TableBody tableBodyClass="divide-y">
+          {#each submissionLogs as submissionLog}
+            <TableBodyRow>
+              <TableBodyCell>{submissionLog.id}</TableBodyCell>
+
+              {#each submissionFields as submissionField}
+                <TableBodyCell>{submissionLog.submission_data[submissionField.name]}</TableBodyCell>
+              {/each}
+
+              <TableBodyCell>{dayjs(submissionLog.created_at).format('YYYY-MM-DD HH:mm')}</TableBodyCell>
+
+              <TableBodyCell>
+                <Button on:click={() => resendSubmissionLog(submissionLog)}>Resend</Button>
+              </TableBodyCell>
+            </TableBodyRow>
+          {/each}
+        </TableBody>
+      </Table>
+    </div>
   </div>
 
 </div>
