@@ -115,6 +115,10 @@
 
   <div class="grid grid-cols-12 gap-2">
 
+    <div class="col-span-12">
+      <p><b>POST:</b>{import.meta.env.VITE_API_ENDPOINT}/api/submit/{submissionName}</p>
+    </div>
+
     <!-- Fields -->
     <div class="col-span-6">
       <Card size="xl" class="h-full">
@@ -171,7 +175,7 @@
 
     <!-- Turnstile -->
     <div class="col-span-12">
-      <Card size="xl" class="h-full">
+      <Card size={'9xl'} class="h-full">
         <div class="grid grid-col-1 gap-2">
           <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Clouflair Turnstile</h5>
 
