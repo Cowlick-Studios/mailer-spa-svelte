@@ -10,7 +10,7 @@
 
   let submissionName: string = "";
   let submissionOrigin: string = "";
-  let turnstileEnabled: boolean = 0;
+  let turnstileEnabled: boolean = false;
   let turnstileSecret: string = "";
 
   let submissionFields: any = [];
