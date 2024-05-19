@@ -3,13 +3,15 @@
   import Icon from '@iconify/svelte';
   import dayjs from 'dayjs';
   import { http } from '../axios';
-  import { Label, Input, Button, Card, InputAddon, ButtonGroup } from 'flowbite-svelte';
+  import { Label, Input, Button, Card, InputAddon, ButtonGroup, Toggle } from 'flowbite-svelte';
   import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
 
   export let id;
 
   let submissionName: string = "";
   let submissionOrigin: string = "";
+  let turnstileEnabled: boolean = 0;
+  let turnstileSecret: string = "";
 
   let submissionFields: any = [];
   let newFieldName: string = "";
@@ -22,13 +24,14 @@
   const updateSubmission = () => {
     http.patch(`/api/email_submission/${id}`, {
       name: submissionName,
-      origin: submissionOrigin
-    }).then((res) => {
-      submissionName = "";
-      submissionOrigin = "";
-
+      origin: submissionOrigin,
+      turnstile_enable: turnstileEnabled,
+      turnstile_secret: turnstileSecret,
+    }).then((res: any) => {
       submissionName = res.data.email_submission.name;
       submissionOrigin = res.data.email_submission.origin;
+      turnstileEnabled = Boolean(res.data.email_submission.turnstile_enable);
+      turnstileSecret = res.data.email_submission.turnstile_secret;
     });
   }
 
@@ -76,8 +79,12 @@
     http.get(`/api/email_submission/${id}`).then((res) => {
       const submissionRecord = res.data.email_submission;
 
+      console.log('submissionRecord', submissionRecord);
+
       submissionName = submissionRecord.name;
       submissionOrigin = submissionRecord.origin;
+      turnstileEnabled = submissionRecord.turnstile_enable;
+      turnstileSecret = submissionRecord.turnstile_secret;
 
       submissionFields = submissionRecord.fields;
       submissionRecipiants = submissionRecord.recipiants;
@@ -161,6 +168,28 @@
         </div>
       </Card>
     </div>
+
+    <!-- Turnstile -->
+    <div class="col-span-12">
+      <Card size="xl" class="h-full">
+        <div class="grid grid-col-1 gap-2">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Clouflair Turnstile</h5>
+
+          <div class="grid grid-cols-12 gap-2">
+            <div class="col-span-3 flex justify-center items-center">
+              <Toggle bind:checked={turnstileEnabled}>Enable Turnstile</Toggle>
+            </div>
+            <div class="col-span-7">
+              <Input type="text" placeholder="Turnstile Secret" required bind:value={turnstileSecret} disabled={!turnstileEnabled} />
+            </div>
+            <div class="col-span-2">
+              <Button class="w-full" on:click={updateSubmission}>Save</Button>
+            </div>
+          </div>
+        </div>
+      </Card>
+    </div>
+
   </div>
 
   <div class="grid grid-cols-12 gap-2">
